@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 
 RUNS/
+data/data_road.zip
