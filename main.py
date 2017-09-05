@@ -54,14 +54,64 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     """
     Create the layers for a fully convolutional network.
     Build skip-layers using the vgg layers.
-    :param vgg_layer7_out: TF Tensor for VGG Layer 3 output
+    :param vgg_layer7_out: TF Tensor for VGG Layer 7 output
     :param vgg_layer4_out: TF Tensor for VGG Layer 4 output
-    :param vgg_layer3_out: TF Tensor for VGG Layer 7 output
+    :param vgg_layer3_out: TF Tensor for VGG Layer 3 output
     :param num_classes: Number of classes to classify
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    return None
+    layer7_conv = tf.layers.conv2d(
+        inputs=vgg_layer7_out,
+        filters=num_classes,
+        kernel_size=1,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    layer7_up = tf.layers.conv2d_transpose(
+        inputs=layer7_conv,
+        filters=num_classes,
+        kernel_size=4,
+        strides=2,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    layer4_conv = tf.layers.conv2d(
+        inputs=vgg_layer4_out,
+        filters=num_classes,
+        kernel_size=1,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    layer4_skip = tf.add(layer7_up, layer4_conv)
+
+    layer4_up = tf.layers.conv2d_transpose(
+        inputs=layer4_skip,
+        filters=num_classes,
+        kernel_size=4,
+        strides=2,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    layer3_conv = tf.layers.conv2d(
+        inputs=vgg_layer4_out,
+        filters=num_classes,
+        kernel_size=1,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    layer3_skip = tf.add(layer4_up, layer3_conv)
+
+    layer3_up = tf.layers.conv2d_transpose(
+        inputs=layer3_skip,
+        filters=num_classes,
+        kernel_size=16,
+        strides=8,
+        padding='same',
+        kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    return layer3_up
+
 tests.test_layers(layers)
 
 
