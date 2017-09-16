@@ -66,7 +66,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         filters=num_classes,
         kernel_size=1,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     layer7_up = tf.layers.conv2d_transpose(
@@ -75,7 +75,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         kernel_size=4,
         strides=2,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     layer4_conv = tf.layers.conv2d(
@@ -83,7 +83,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         filters=num_classes,
         kernel_size=1,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     layer4_skip = tf.add(layer7_up, layer4_conv)
@@ -94,7 +94,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         kernel_size=4,
         strides=2,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     layer3_conv = tf.layers.conv2d(
@@ -102,7 +102,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         filters=num_classes,
         kernel_size=1,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     layer3_skip = tf.add(layer4_up, layer3_conv)
@@ -113,7 +113,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
         kernel_size=16,
         strides=8,
         padding='same',
-        kernel_initializer=tf.truncated_normal_initializer(stddev = 0.01),
+        kernel_initializer=tf.truncated_normal_initializer(stddev=0.01),
         kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     return layer3_up
