@@ -102,3 +102,4 @@ ENV/
 
 RUNS/
 data/data_road.zip
+.vscode

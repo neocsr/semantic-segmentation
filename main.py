@@ -191,7 +191,7 @@ def run():
     image_shape = (160, 576)
     data_dir = './data'
     runs_dir = './runs'
-    epochs = 50
+    epochs = 30
     batch_size = 8
     tests.test_for_kitti_dataset(data_dir)
 
